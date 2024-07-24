@@ -61,7 +61,8 @@ public enum Finger {
         System.out.println("java.library.path: " + libraryPath);
 
         
-        System.loadLibrary("libsvh_java");
+        System.loadLibrary("svh_java");
+
         System.out.println("svh_java library loaded.");
         //initFiveFingerManager();
     }
