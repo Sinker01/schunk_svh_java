@@ -86,17 +86,16 @@ public enum Finger {
     
     /**
      * Initialises the five-Finger-Manger.
-     * This Method has to be called before any use of onother method.
+     * an init method has to be called before any use of onother method.
      */
     public static native void initFiveFingerManager();
 
-    //Dieser code lädt die in /build liegende Dateien
-    /*static {
-        File lib = new File("build/" + System.mapLibraryName("libsvh_java")); //Pfad in den cmake_build_debug Ordner, wo nach dem kompilieren die .so Dateien liegen
-        System.out.println("FINGER LIB PATH: " + lib.getAbsolutePath());
-        System.load(lib.getAbsolutePath());
-        initFiveFingerManager();
-    }*/
+    /**
+     * Initialises the five-Finger-Manger.
+     * An init method has to be called before any use of onother method.
+     * @param port the port of the serial device
+     */
+    public static native void initFiveFingerManagerWindows(String port);
 
     //Dieser Code lädt die im System gespeicherten Variablen
     static {
@@ -106,7 +105,7 @@ public enum Finger {
         // Print the value
         System.out.println("java.library.path: " + libraryPath);
 
-        //If on windows, libnames begins with an "lib"
+        //If on windows, libnames begins with a "lib"
         System.loadLibrary(System.getProperty("os.name").toLowerCase().startsWith("win")
             ? "libsvh_java" : "svh_java");
 
@@ -114,9 +113,8 @@ public enum Finger {
         //initFiveFingerManager();
     }
 
+
     //The native c methods
-
-
     private static native byte setPositionTarget(int finger, double position);
 
     private static native byte setSpeed(int finger, double speed);
