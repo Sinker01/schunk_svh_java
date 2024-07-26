@@ -34,7 +34,7 @@ public enum Finger {
      * @return True, if a valid value were passed, else false
      */
     public boolean setPositionTarget(double target) {
-        return !(setPositionTarget(index, target) == 0);
+        return (setPositionTarget(index, target) == 0);
     }
 
     /**
@@ -45,7 +45,7 @@ public enum Finger {
      * @return True, if a valid value were passed, else false
      */
     public boolean setSpeed(double speed) {
-        return !(setSpeed(index, speed) == 0);
+        return (setSpeed(index, speed) == 0);
     }
 
     /**
@@ -58,7 +58,7 @@ public enum Finger {
      * @return True, if a valid value were passed, else false
      */
     public boolean setMaxNewton(double maxNewton) {
-        return !(setMaxNewton(index, maxNewton) == 0);
+        return (setMaxNewton(index, maxNewton) == 0);
     }
 
     /**
@@ -71,7 +71,7 @@ public enum Finger {
      * @return True, if a valid value were passed, else false
      */
     public boolean setMaxmA(double maxmA) {
-        return !(setMaxmA(index, maxmA) == 0);
+        return (setMaxmA(index, maxmA) == 0);
     }
 
     /**
