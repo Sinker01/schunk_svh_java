@@ -2,7 +2,7 @@ package fingermanager;
 
 /**
  * The class for managing The Shunk five-finger-hand
- * Notice that each method gets executed imediate. Mayte the use of sleep-methods could make sense.
+ * Notice that each method gets executed immediate. Mayte the use of sleep-methods could make sense.
  */
 public enum Finger {
 
@@ -19,7 +19,7 @@ public enum Finger {
     private final int index;
 
     /**
-     * <p>initializer for the Enum. The Indes is defined in the c++ package</p>
+     * <p>initializer for the Enum. The index values are defined in the c++ package</p>
      * @param index The index of the finger
      */
     Finger(int index) {
@@ -39,7 +39,7 @@ public enum Finger {
 
     /**
      * <p>Set the current speed of the finger.</p>
-     * <p>1 is the maximum speed. 0 represents a deactivated finger, and e.g the value 0.5 should result in a finger miving 0.5 times so fast.
+     * <p>1 is the maximum speed. 0 represents a deactivated finger, and e.g the value 0.5 should result in a finger moving 0.5 times so fast.
      * If the given value was too high or too low, it is reduced to the nearest possible value</p>
      * @param speed A double between 0 and 1
      * @return True, if a valid value were passed, else false
@@ -62,6 +62,19 @@ public enum Finger {
     }
 
     /**
+     * <p>Sets the maximal mA of the finger</p>
+     * <p>The value is given in mA.<br>
+     * The maximum values can be found in the FingerManagerWrapper.cpp file In the variable CURRENT_SETTINGS.<br>
+     * However, if the given value was too high, it gets reduced to the nearest legit value.<br>
+     * An negative value will be transformed to an positive value </p>
+     * @param maxmA the maximal value in mA
+     * @return True, if a valid value were passed, else false
+     */
+    public boolean setMaxmA(double maxmA) {
+        return !(setMaxmA(index, maxmA) == 0);
+    }
+
+    /**
      * @return the actual mA of the finger
      */
     public short getmA() {
@@ -69,7 +82,7 @@ public enum Finger {
     }
 
     /**
-     * Returns The actual mA of the finger. The actual value could differ up to 30%.
+     * Returns The actual Newton of the finger. The actual value could differ up to 30%.
      * @return the actual Newton of the finger
      */
     public double getNewton() {
@@ -86,18 +99,18 @@ public enum Finger {
     
     /**
      * Initialises the five-Finger-Manger.
-     * an init method has to be called before any use of onother method.
+     * an init method has to be called before any use of another method.
      */
     public static native void initFiveFingerManager();
 
     /**
      * Initialises the five-Finger-Manger.
-     * An init method has to be called before any use of onother method.
+     * An init method has to be called before any use of another method.
      * @param port the port of the serial device
      */
     public static native void initFiveFingerManagerWindows(String port);
 
-    //Dieser Code lädt die im System gespeicherten Variablen
+    //Load the schunk_svh lib
     static {
         // Get the current value of java.library.path
         String libraryPath = System.getProperty("java.library.path");
@@ -105,7 +118,7 @@ public enum Finger {
         // Print the value
         System.out.println("java.library.path: " + libraryPath);
 
-        //If on windows, libnames begins with a "lib"
+        //If on windows, library names begins with a "lib"
         System.loadLibrary(System.getProperty("os.name").toLowerCase().startsWith("win")
             ? "libsvh_java" : "svh_java");
 
