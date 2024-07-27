@@ -1,4 +1,7 @@
 import fingermanager.Finger;
+import tools.DataCollector;
+
+import static tools.FingerTools.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,8 +13,17 @@ public class Main {
         //testSpeed();
         //mainPosition();
         //getData(5);
-        helloWorld();
+        moveAndCollectData(Finger.values(), 3);
         //helloWorld();
+    }
+
+    private static void moveAndCollectData(Finger[] fingers, int times) {
+        moveFingersTo(fingers, 0);
+        DataCollector collecter = new DataCollector(fingers, 5, "_measure.tsv");
+        for (int i = 0; i < times; i++) {
+            moveFingersTo(fingers, 1, collecter);
+            moveFingersTo(fingers, 0, collecter);
+        }
     }
 
     private static void helloWorld(){
@@ -48,35 +60,6 @@ public class Main {
         }
     }
 
-    private static void mainPosition() {
-        for (Finger finger : Finger.values()) {
-            finger.setPositionTarget(0.0);
-        }
-        Finger.SPREAD.setPositionTarget(0.3);
-        sleep(1000);
-    }
-
-    private static void getData(int count) {
-        Finger finger = Finger.INDEX_PROXIMAL;
-        for (int i = 0; i < count; i++) {
-            finger.setPositionTarget(1.0);
-            sleepAndPrintData(finger, 1000000);
-            finger.setPositionTarget(0.0);
-            sleepAndPrintData(finger, 1000000);
-        }
-    }
-
-    private static void testNewton() {
-        Finger finger = Finger.RING;
-        for (int i = 0; i < 10; i++) {
-            finger.setMaxNewton((10 - i) * 0.5);
-            finger.setPositionTarget(1.0);
-            sleepAndPrintData(finger, 1000000);
-            finger.setPositionTarget(0.0);
-            sleepAndPrintData(finger, 1000000);
-        }
-    }
-
     // Helper method to sleep for the specified milliseconds
     private static void sleep(int milliseconds) {
         try {
@@ -84,15 +67,5 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    // Helper method to sleep and print data
-    private static void sleepAndPrintData(Finger finger, long timeMicros) {
-        long startTime = System.nanoTime();
-        long currentTime;
-        do {
-            currentTime = System.nanoTime() - startTime;
-            System.out.println("Time: " + currentTime / 1000 + "µs; mA: " + finger.getmA() + "; Newton: " + finger.getNewton() + "; Position: " + finger.getPosition());
-        } while (currentTime <= timeMicros * 1000);
     }
 }

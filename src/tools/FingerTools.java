@@ -1,0 +1,68 @@
+package tools;
+import fingermanager.Finger;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public final class FingerTools {
+    private FingerTools() {
+    }
+
+    public static double APPR = 0.03;
+
+    public static void moveFingerTo(Finger finger, double targetPosition, Runnable action) {
+        moveFingersTo(new Finger[]{finger}, new double[]{targetPosition}, action);
+    }
+
+    public static void moveFingerTo(Finger finger, double targetPosition) {
+        moveFingerTo(finger, targetPosition, () -> {});
+    }
+
+    public static void moveFingersTo(Finger[] fingers, double[] targets, final Runnable action) throws IllegalArgumentException {
+        if(fingers.length != targets.length) {
+            throw new IllegalArgumentException("The number of fingers does not match the number of targets");
+        }
+        for (int i = 0; i < fingers.length; i++) {
+            fingers[i].setPositionTarget(targets[i]);
+        }
+
+        cont:
+        do{
+            action.run();
+            for (int i = 0; i < fingers.length; i++) {
+                if (Math.abs(fingers[i].getPosition() - targets[i]) > APPR) continue cont;
+            }
+        } while (false);
+    }
+
+    public static void moveFingersTo(Finger[] fingers, double target, final Runnable action) throws IllegalArgumentException {
+        double[] targets = new double[fingers.length];
+        for (int i = 0; i < fingers.length; i++) {
+            targets[i] = target;
+        }
+        moveFingersTo(fingers, targets, action);
+    }
+
+    public static void moveFingersTo(Finger[] fingers, double target) throws IllegalArgumentException {
+        moveFingersTo(fingers, target, () -> {});
+    }
+
+
+    public static void moveFingersTo(Finger[] fingers, double[] targets) throws IllegalArgumentException {
+        moveFingersTo(fingers, targets, () -> {});
+    }
+
+    public static void wait(long time, Delay_Runnable action) {
+        for (int i = 0; i < (time/action.getDelay()); i++) {
+            action.run();
+        }
+    }
+
+    public static void wait(long time, Runnable action) {
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - startTime < time) {
+            action.run();
+        }
+    }
+}
