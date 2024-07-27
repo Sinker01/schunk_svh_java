@@ -28,6 +28,16 @@ public class DataCollector implements Delay_Runnable {
         this.startTime = System.currentTimeMillis();
     }
 
+    public void close() {
+        for (BufferedWriter f : file) {
+            try {
+                f.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     @Override
     public void run() {
         delay();

@@ -19,11 +19,12 @@ public class Main {
 
     private static void moveAndCollectData(Finger[] fingers, int times) {
         moveFingersTo(fingers, 0);
-        DataCollector collecter = new DataCollector(fingers, 5, "_measure.tsv");
+        DataCollector collector = new DataCollector(fingers, 5, "_measure.tsv");
         for (int i = 0; i < times; i++) {
-            moveFingersTo(fingers, 1, collecter);
-            moveFingersTo(fingers, 0, collecter);
+            moveFingersTo(fingers, 1, collector);
+            moveFingersTo(fingers, 0, collector);
         }
+        collector.close();
     }
 
     private static void helloWorld(){
