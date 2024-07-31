@@ -13,15 +13,30 @@ public class Main {
         //testSpeed();
         //mainPosition();
         //getData(5);
-        moveAndCollectData(Finger.values(), 3);
+        Finger[] fingers = {Finger.THUMB_DISTAL, Finger.INDEX_DISTAL, Finger.INDEX_PROXIMAL, Finger.MIDDLE_DISTAL, Finger.MIDDLE_PROXIMAL, Finger.RING, Finger.PINKY};
+        moveAndCollectData(fingers, 3);
         //helloWorld();
+        /*
+        Finger finger = Finger.MIDDLE_PROXIMAL;
+        finger.setPositionTarget(0);
+        sleep(2000);
+        finger.setPositionTarget(1);
+        double pos = finger.getPosition();
+        do {
+            sleep(20);
+            pos = finger.getPosition();
+            System.out.println(pos);
+        } while(Math.abs(1 - pos) > 0.05);
+        System.out.println(pos);
+        System.out.println(Math.abs(1 - pos) > 0.05);
+        */
     }
 
     private static void moveAndCollectData(Finger[] fingers, int times) {
         moveFingersTo(fingers, 0);
         DataCollector collector = new DataCollector(fingers, 5, "_measure.tsv");
         for (int i = 0; i < times; i++) {
-            moveFingersTo(fingers, 1, collector);
+            moveFingersTo(fingers, 0.7, collector);
             moveFingersTo(fingers, 0, collector);
         }
         collector.close();
@@ -29,6 +44,7 @@ public class Main {
 
     private static void helloWorld(){
         for (Finger finger : Finger.values()){
+            if (finger.equals(Finger.THUMB_DISTAL)) continue;
             finger.setPositionTarget(1.0);
         }
         sleep(2000);

@@ -26,14 +26,18 @@ public final class FingerTools {
         for (int i = 0; i < fingers.length; i++) {
             fingers[i].setPositionTarget(targets[i]);
         }
+        do action.run();
+        while (waitUntil(fingers, targets));
+        int i = 0;
+    }
 
-        cont:
-        do{
-            action.run();
-            for (int i = 0; i < fingers.length; i++) {
-                if (Math.abs(fingers[i].getPosition() - targets[i]) > APPR) continue cont;
-            }
-        } while (false);
+    private static boolean waitUntil(Finger[] fingers, double[] targets) {
+
+        for (int i = 0; i < fingers.length; i++) {
+            if (Math.abs(fingers[i].getPosition() - targets[i]) > APPR) return true;
+        }
+        return false;
+
     }
 
     public static void moveFingersTo(Finger[] fingers, double target, final Runnable action) throws IllegalArgumentException {

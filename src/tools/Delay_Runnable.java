@@ -6,6 +6,6 @@ public interface Delay_Runnable extends Runnable {
     default void delay() {
         try {
             Thread.sleep(getDelay());
-        } catch (InterruptedException _) {}
+        } catch (InterruptedException e) {}
     }
 }

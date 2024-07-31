@@ -94,7 +94,8 @@ public enum Finger {
      * @return The position between 0 and 1
      */
     public double getPosition() {
-        return getPosition(index);
+        double position = getPosition(index);
+        return position;
     }
     
     /**
