@@ -14,22 +14,22 @@ public class Main {
         //mainPosition();
         //getData(5);
         Finger[] fingers = {Finger.THUMB_DISTAL, Finger.INDEX_DISTAL, Finger.INDEX_PROXIMAL, Finger.MIDDLE_DISTAL, Finger.MIDDLE_PROXIMAL, Finger.RING, Finger.PINKY};
-        moveAndCollectData(fingers, 3);
+        //moveAndCollectData(fingers, 3);
         //helloWorld();
-        /*
-        Finger finger = Finger.MIDDLE_PROXIMAL;
-        finger.setPositionTarget(0);
-        sleep(2000);
+        measureLatency(Finger.MIDDLE_PROXIMAL);
+    }
+
+    private static void measureLatency(Finger finger) {
+        moveFingerTo(finger, 0);
+        finger.setSpeed(1);
+        DataCollector collector = new DataCollector(new Finger[]{finger}, 0, "latenc-test.tsv");
         finger.setPositionTarget(1);
-        double pos = finger.getPosition();
-        do {
-            sleep(20);
-            pos = finger.getPosition();
-            System.out.println(pos);
-        } while(Math.abs(1 - pos) > 0.05);
-        System.out.println(pos);
-        System.out.println(Math.abs(1 - pos) > 0.05);
-        */
+        waitUntil(500, collector);
+
+        System.out.println(System.currentTimeMillis() - collector.startTime);
+
+        moveFingerTo(finger, 0, collector);
+
     }
 
     private static void moveAndCollectData(Finger[] fingers, int times) {

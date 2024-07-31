@@ -11,7 +11,7 @@ public class DataCollector implements Delay_Runnable {
     private final BufferedWriter[] file;
     private final Finger[] fingers;
     private final long delay;
-    private final long startTime;
+    public final long startTime;
 
     public DataCollector(Finger[] fingers, long delay, String path) {
         file = new BufferedWriter[fingers.length];

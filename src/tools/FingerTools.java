@@ -57,13 +57,7 @@ public final class FingerTools {
         moveFingersTo(fingers, targets, () -> {});
     }
 
-    public static void wait(long time, Delay_Runnable action) {
-        for (int i = 0; i < (time/action.getDelay()); i++) {
-            action.run();
-        }
-    }
-
-    public static void wait(long time, Runnable action) {
+    public static void waitUntil(long time, Runnable action) {
         long startTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - startTime < time) {
             action.run();
