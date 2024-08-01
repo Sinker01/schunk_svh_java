@@ -33,5 +33,5 @@ fig.legend(loc='upper right', bbox_to_anchor=(0.9, 0.9))
 
 # Set the title
 plt.title('Position, Current, and Force vs Time')
-
+plt.savefig("normal.png")
 plt.show()

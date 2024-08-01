@@ -25,7 +25,7 @@ public class DataCollector implements Delay_Runnable {
         }
         this.fingers = fingers;
         this.delay = delay;
-        this.startTime = System.currentTimeMillis();
+        this.startTime = System.nanoTime() / 1000;
     }
 
     public void close() {
@@ -40,11 +40,11 @@ public class DataCollector implements Delay_Runnable {
 
     @Override
     public void run() {
-        delay();
+        if(getDelay()!=0) delay();
         for (int i = 0; i < fingers.length; i++) {
             try {
                 file[i].write(
-                        (System.currentTimeMillis() - startTime) + "\t" +
+                        (System.nanoTime() / 1000 - startTime) + "\t" +
                                 fingers[i].getPosition() + "\t" +
                                 fingers[i].getmA() + "\t" +
                                 fingers[i].getNewton() + "\n"
