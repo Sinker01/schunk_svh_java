@@ -23,7 +23,7 @@ plt.legend()
 plt.grid(True)
 
 # Save the plot to a file
-output_file = 'position_vs_time_scatter.png'  # You can change the file name and format as needed
+output_file = '../position_vs_time_scatter.png'  # You can change the file name and format as needed
 plt.savefig(output_file)
 
 # Show the plot
